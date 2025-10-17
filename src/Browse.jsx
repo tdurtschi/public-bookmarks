@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
+import Header from './components/Header'
+import BookmarkList from './components/BookmarkList'
 
-export default function Browse() {
+export default function Browse( {session}) {
     const [loading, setLoading] = useState(true)
     const [profiles, setProfiles] = useState([])
     const [bookmarks, setBookmarks] = useState([])
@@ -27,7 +29,7 @@ export default function Browse() {
           setLoading(true)
           const { data, error } = await supabase
             .from('bookmark')
-            .select(`title, url, description, user_id`)
+            .select(`id, title, url, description, user_id`)
           if (!ignore) {
             if (error) {
               console.warn(error)
@@ -45,21 +47,14 @@ export default function Browse() {
 
     return (
         <>
-            <div>Browse All</div>
+            <Header session={session} />
+            <h1>Browse All</h1>
             {loading ? "Loading ..." : 
             <>
                 {profiles.map(profile => (
                     <div key={profile.username} style={{marginBottom: '20px'}}>
-                        <div>Username: {profile.username}</div>
-                        <ul>
-                          {bookmarks.filter(b => b.user_id === profile.id).map(bookmark => (
-                            <li key={bookmark.url}>
-                              <div>Title: {bookmark.title}</div>
-                              <div>URL: <a href={bookmark.url} target="_blank" rel="noopener noreferrer">{bookmark.url}</a></div>
-                              <div>Description: {bookmark.description}</div>
-                            </li>
-                          ))} 
-                        </ul>
+                        <h2>{profile.username}</h2>
+                        <BookmarkList bookmarks={bookmarks.filter(b => b.user_id === profile.id)}/>
                     </div>
                 ))}
             </>}

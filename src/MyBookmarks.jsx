@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../supabaseClient'
+import { supabase } from './supabaseClient'
+import BookmarkList from './components/BookmarkList'
+import Header from './components/Header'
 
 export default function MyBookmarks({ session }){
     var [myBookmarks, setMyBookmarks] = useState([])
@@ -43,25 +45,30 @@ export default function MyBookmarks({ session }){
             ]);
         if (error) {
             alert(error.message);
-        } else {
-            setMyBookmarks([...myBookmarks, data[0]]);
+        } else {             
             setNewTitle('');    
             setNewDescription('');
             setNewUrl('');
+
+            const { data, error } = await supabase
+            .from('bookmark')
+            .select(`id, url, title, description`)
+            .eq('user_id', user.id);
+          
+            if (error) {
+              console.warn(error)
+            } else if (data) {
+              setMyBookmarks(data)
+            }
         }
+        window.location.reload();
         setLoading(false);
     }
 
     return (
         <>
-            <div>My Bookmarks</div>
-            {myBookmarks.map(bookmark => (
-                <div key={bookmark.id} style={{marginBottom: '20px'}}>
-                    <div>Title: {bookmark.title}</div>
-                    <div>URL: {bookmark.url}</div>
-                    <div>Description: {bookmark.description}</div>
-                </div>
-            ))}
+            <Header session={session} />
+            <h1>My Bookmarks</h1>
             <form onSubmit={createBookmark}>
                 Add a new bookmark:
                 <input type="text" placeholder="Title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
@@ -69,6 +76,7 @@ export default function MyBookmarks({ session }){
                 <input type="text" placeholder="Description" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
                 <button type="submit" disabled={loading}>{loading ? "Loading..." : "Add Bookmark"}</button>
             </form> 
+            <BookmarkList bookmarks={myBookmarks} />
         </>
     )
 }
