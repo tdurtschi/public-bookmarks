@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import BookmarkList from "./components/BookmarkList";
 import Header from "./components/Header";
 import { useDependencyInjection } from "./DependencyInjectionContext";
+import { Link } from "react-router-dom";
 
 export default function MyBookmarks() {
   var [myBookmarks, setMyBookmarks] = useState([]);
@@ -10,14 +11,19 @@ export default function MyBookmarks() {
   const [newDescription, setNewDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const { apiClient } = useDependencyInjection();
+  const [hasProfile, setHasProfile] = useState(false);
 
   useEffect(() => {
     let ignore = false;
     async function getMyBookmarks() {
       setLoading(true);
-      const data = await apiClient.getMyBookmarks();
+      const bookmarks = await apiClient.getMyBookmarks();
       if (!ignore) {
-        setMyBookmarks(data);
+        setMyBookmarks(bookmarks);
+      }
+      const { data } = await apiClient.getMyProfile();
+      if (data != null) {
+        setHasProfile(true);
       }
       setLoading(false);
     }
@@ -65,6 +71,19 @@ export default function MyBookmarks() {
     <>
       <Header />
       <h1>My Bookmarks</h1>
+      {!hasProfile && !loading ? (
+        <div
+          style={{
+            margin: "12px 0",
+            backgroundColor: "#ffdddd",
+            padding: "12px",
+          }}
+        >
+          ⚠️ You need to finish your profile before your bookmarks will appear
+          on the home page. Go to <Link to="/account">My Account</Link> to
+          set up your profile.
+        </div>
+      ) : null}
       <form onSubmit={createBookmark}>
         Add a new bookmark:
         <input
