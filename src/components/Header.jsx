@@ -9,7 +9,8 @@ export default function Header({ isAnonymous }) {
           <Link to="/browse">Public Bookmarks</Link>
         </h1>
         {isAnonymous ? (
-          <div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <Link to="/about">About</Link>
             <Link to="/login">Login</Link>
           </div>
         ) : (

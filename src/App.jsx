@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import Auth from "./Auth";
 import Account from "./Account";
+import About from "./About";
 import Browse from "./Browse";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import MyBookmarks from "./MyBookmarks";
@@ -27,6 +28,7 @@ function App() {
       >
         <div className="container" style={{ padding: "50px 0 100px 0" }}>
           <Routes>
+            <Route path="/about" element={<About />} />
             {!session ? (
               <>
                 <Route path="/login" element={<Auth />} />
