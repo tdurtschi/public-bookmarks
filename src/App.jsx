@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient'
 import Auth from './Auth'
 import Browse from './Browse'
 import Account from './Account'
+import MyBookmarks from './components/MyBookmarks'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -23,6 +24,7 @@ function App() {
         : <>
             <Browse />
             <Account session={session} />
+            <MyBookmarks session={session} />
           </>}
     </div>
   )
