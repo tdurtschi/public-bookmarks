@@ -386,6 +386,13 @@ button.primary,
   flex-wrap: wrap;
 }
 
+.header h1 a{
+  text-decoration: none;
+}
+.header h1 a:hover{
+  text-decoration: underline;
+}
+
 .bookmark-list {
   list-style-type: none;
   padding: 0;
