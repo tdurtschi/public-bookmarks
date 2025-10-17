@@ -69,19 +69,21 @@ export default function MyBookmarks() {
         Add a new bookmark:
         <input
           type="text"
-          placeholder="Title"
+          placeholder="Title (required)"
+          required
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
         <input
           type="text"
-          placeholder="URL"
+          placeholder="URL (required)"
           value={newUrl}
+          required
           onChange={(e) => setNewUrl(e.target.value)}
         />
         <input
           type="text"
-          placeholder="Description"
+          placeholder="Description (optional)"
           value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
         />

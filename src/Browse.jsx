@@ -31,7 +31,6 @@ export default function Browse({ session }) {
   return (
     <>
       <Header isAnonymous={session == null}/>
-      <h1>All Bookmarks</h1>
       {loading ? (
         "Loading ..."
       ) : (
@@ -43,7 +42,7 @@ export default function Browse({ session }) {
             }
 
             return (
-              <div key={profile.username} style={{ marginBottom: "20px" }}>
+              <div key={profile.username} style={{ marginBottom: "36px" }}>
                 <h2>{profile.username}</h2>
                 <BookmarkList
                   bookmarks={bookmarksForThisUser}
