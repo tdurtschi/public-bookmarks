@@ -6,6 +6,8 @@ import Account from './Account'
 import Browse from './Browse'
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import MyBookmarks from './MyBookmarks'
+import { DependencyInjectionProvider } from './DependencyInjectionContext'
+import getApiClient from './apiClient';
 
 function App() {
   const [session, setSession] = useState(null)
@@ -21,21 +23,21 @@ function App() {
   return (
     <HashRouter>
       <div className="container" style={{ padding: '50px 0 100px 0' }}>
-        <Routes>
           {!session ? (
-            <>
+            <Routes>
               <Route path="/login" element={<Auth />} />
               <Route path="*" element={<Navigate to="/login" replace />} />
-            </>
+            </Routes>
           ) : (
-            <>
-              <Route path="/browse" element={<Browse session={session}/>} />
-              <Route path="/account" element={<Account session={session}/>} />
-              <Route path="/mybookmarks" element={<MyBookmarks session={session}/>} />
-              <Route path="*" element={<Navigate to="/browse" replace />} />
-            </>
+            <DependencyInjectionProvider services={{ apiClient: getApiClient(session) }}>
+              <Routes>
+                <Route path="/browse" element={<Browse session={session}/>} />
+                <Route path="/account" element={<Account session={session}/>} />
+                <Route path="/mybookmarks" element={<MyBookmarks session={session}/>} />
+                <Route path="*" element={<Navigate to="/browse" replace />} />
+              </Routes>
+            </DependencyInjectionProvider>
           )}
-        </Routes>
       </div>
     </HashRouter>
   )

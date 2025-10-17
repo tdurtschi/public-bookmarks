@@ -6,7 +6,7 @@ body {
   --custom-panel-color: #222;
   --custom-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.8);
   --custom-color: #222;
-  --custom-color-brand: #24b47e;
+  --custom-color-brand: #65b662;
   --custom-color-secondary: #666;
   --custom-border: 1px solid #333;
   --custom-border-radius: 5px;
@@ -172,7 +172,6 @@ label {
   margin: 5px 0;
   color: var(--custom-color-secondary);
   font-size: 0.8rem;
-  text-transform: uppercase;
 }
 
 input {
@@ -248,7 +247,6 @@ button,
   cursor: pointer;
   text-align: center;
   font-size: 0.9rem;
-  text-transform: uppercase;
 }
 
 button.primary,
@@ -362,7 +360,7 @@ button.primary,
 }
 
 .form-widget .button:hover {
-  background-color: #2a2a2a;
+  outline: 1px solid var(--custom-color-secondary)
 }
 
 .form-widget .button > .loader {

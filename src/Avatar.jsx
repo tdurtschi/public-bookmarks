@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { supabase } from './supabaseClient'
+import { useDependencyInjection } from './DependencyInjectionContext';
 export default function Avatar({ url, size, onUpload }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
+  const { apiClient } = useDependencyInjection();
   useEffect(() => {
     if (url) downloadImage(url)
   }, [url])
+
   async function downloadImage(path) {
     try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
+      const { data, error } = await apiClient.downloadAvatar(path);
       if (error) {
         throw error
       }
@@ -18,6 +20,7 @@ export default function Avatar({ url, size, onUpload }) {
       console.log('Error downloading image: ', error.message)
     }
   }
+
   async function uploadAvatar(event) {
     try {
       setUploading(true)
@@ -28,7 +31,7 @@ export default function Avatar({ url, size, onUpload }) {
       const fileExt = file.name.split('.').pop()
       const fileName = `${Math.random()}.${fileExt}`
       const filePath = `${fileName}`
-      const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+      const { error: uploadError } = await apiClient.uploadNewAvatar(filePath, file);
       if (uploadError) {
         throw uploadError
       }
@@ -39,8 +42,10 @@ export default function Avatar({ url, size, onUpload }) {
       setUploading(false)
     }
   }
+  
   return (
     <div>
+      <label for="single">Profile Pic</label>
       {avatarUrl ? (
         <img
           src={avatarUrl}

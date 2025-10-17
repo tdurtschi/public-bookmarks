@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
 import BookmarkList from './components/BookmarkList'
 import Header from './components/Header'
+import { useDependencyInjection } from './DependencyInjectionContext';
 
 export default function MyBookmarks({ session }){
     var [myBookmarks, setMyBookmarks] = useState([])
@@ -9,22 +9,15 @@ export default function MyBookmarks({ session }){
     const [newUrl, setNewUrl] = useState('')
     const [newDescription, setNewDescription] = useState('')
     const [loading, setLoading] = useState(false)
+    const { apiClient } = useDependencyInjection();
 
-    const { user } = session
     useEffect(() => {
             let ignore = false
             async function getMyBookmarks() {
               setLoading(true)
-              const { data, error } = await supabase
-                .from('bookmark')
-                .select(`id, url, title, description`)
-                .eq('user_id', user.id);
+              const data = await apiClient.getMyBookmarks();
               if (!ignore) {
-                if (error) {
-                  console.warn(error)
-                } else if (data) {
-                  setMyBookmarks(data)
-                }
+                setMyBookmarks(data)
               }
               setLoading(false)
             }
@@ -38,11 +31,8 @@ export default function MyBookmarks({ session }){
         console.log("Creating bookmark")
         event.preventDefault()
         setLoading(true);
-        const { data, error } = await supabase
-            .from('bookmark')
-            .insert([
-                { title: newTitle, url: newUrl, description: newDescription, user_id: user.id },
-            ]);
+        const { error } = await apiClient.createBookmark(newTitle, newUrl, newDescription);
+        
         if (error) {
             alert(error.message);
         } else {             
@@ -50,16 +40,8 @@ export default function MyBookmarks({ session }){
             setNewDescription('');
             setNewUrl('');
 
-            const { data, error } = await supabase
-            .from('bookmark')
-            .select(`id, url, title, description`)
-            .eq('user_id', user.id);
-          
-            if (error) {
-              console.warn(error)
-            } else if (data) {
-              setMyBookmarks(data)
-            }
+            const data = await apiClient.getMyBookmarks();
+            setMyBookmarks(data)
         }
         window.location.reload();
         setLoading(false);
@@ -67,7 +49,7 @@ export default function MyBookmarks({ session }){
 
     return (
         <>
-            <Header session={session} />
+            <Header/>
             <h1>My Bookmarks</h1>
             <form onSubmit={createBookmark}>
                 Add a new bookmark:

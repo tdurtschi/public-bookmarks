@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import { supabase } from '../supabaseClient'
 
-export default function Header({ session }) {
-    if (!session) {
-        return null;
-    }   
+export default function Header() {
     return (
         <header>
-            <div class="header">
+            <div className="header">
                 <h1><Link to="/browse">Public Bookmarks</Link></h1>
                 <div style={{ display: 'flex', gap: "8px"}}>
                 <Link to="/myBookmarks">My Bookmarks</Link> 
