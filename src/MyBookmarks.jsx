@@ -3,7 +3,7 @@ import BookmarkList from "./components/BookmarkList";
 import Header from "./components/Header";
 import { useDependencyInjection } from "./DependencyInjectionContext";
 
-export default function MyBookmarks({ session }) {
+export default function MyBookmarks() {
   var [myBookmarks, setMyBookmarks] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newUrl, setNewUrl] = useState("");

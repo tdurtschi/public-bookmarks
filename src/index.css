@@ -396,5 +396,12 @@ button.primary,
 }
 
 .bookmark-list li:not(:last-child) {
-  border-bottom: 1px solid var(--custom-border);
+  margin-bottom: 12px;
+}
+
+.bookmark-list a {
+  text-decoration: none;
+}
+.bookmark-list a:hover {
+  text-decoration: underline;
 }

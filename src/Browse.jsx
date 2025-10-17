@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import BookmarkList from "./components/BookmarkList";
 import { useDependencyInjection } from "./DependencyInjectionContext";
@@ -30,20 +30,28 @@ export default function Browse({ session }) {
 
   return (
     <>
-      <Header/>
+      <Header isAnonymous={session == null}/>
       <h1>All Bookmarks</h1>
       {loading ? (
         "Loading ..."
       ) : (
         <>
-          {profiles.map((profile) => (
-            <div key={profile.username} style={{ marginBottom: "20px" }}>
-              <h2>{profile.username}</h2>
-              <BookmarkList
-                bookmarks={bookmarks.filter((b) => b.user_id === profile.id)}
-              />
-            </div>
-          ))}
+          {profiles.map((profile) => {
+            var bookmarksForThisUser = bookmarks.filter((b) => b.user_id === profile.id)
+            if(bookmarksForThisUser.length === 0) {
+              return null;
+            }
+
+            return (
+              <div key={profile.username} style={{ marginBottom: "20px" }}>
+                <h2>{profile.username}</h2>
+                <BookmarkList
+                  bookmarks={bookmarksForThisUser}
+                />
+              </div>
+              )
+            }
+          )}
         </>
       )}
     </>
