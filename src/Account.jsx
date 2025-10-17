@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
+import Avatar from './Avatar'
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
@@ -75,6 +76,13 @@ export default function Account({ session }) {
           onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
+      <Avatar
+        url={avatar_url}
+        size={150}
+        onUpload={(event, url) => {
+            updateProfile(event, url)
+        }}
+      />
       <div>
         <button className="button block primary" type="submit" disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
