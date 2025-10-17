@@ -42,10 +42,10 @@ export default function Avatar({ url, size, onUpload }) {
       setUploading(false)
     }
   }
-  
+
   return (
     <div>
-      <label for="single">Profile Pic</label>
+      <label htmlFor="single">Profile Pic</label>
       {avatarUrl ? (
         <img
           src={avatarUrl}

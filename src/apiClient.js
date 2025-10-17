@@ -39,6 +39,14 @@ export default (session) => {
         return { data, error }
     },
 
+    deleteBookmark: async function (id) {
+        const { error } = await supabase
+            .from('bookmark')
+            .delete()
+            .eq('id', id);
+        return { error }
+    },
+
     getAllProfiles: async function () {
          const { data, error } = await supabase
             .from('profiles')

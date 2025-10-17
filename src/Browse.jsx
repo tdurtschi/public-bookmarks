@@ -31,7 +31,7 @@ export default function Browse({ session }) {
   return (
     <>
       <Header/>
-      <h1>Browse All</h1>
+      <h1>All Bookmarks</h1>
       {loading ? (
         "Loading ..."
       ) : (
