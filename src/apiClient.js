@@ -12,7 +12,6 @@ export default (session) => {
       }
 
       return data;
-
     },
 
     getMyBookmarks: async function () {
@@ -51,6 +50,7 @@ export default (session) => {
          const { data, error } = await supabase
             .from('profiles')
             .select(`username, avatar_url, id`)
+            .order('created_at', { ascending: true });
 
         if (error) {       
             console.warn(error);   
