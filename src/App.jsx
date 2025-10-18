@@ -5,7 +5,7 @@ import Auth from "./Auth";
 import Account from "./Account";
 import About from "./About";
 import Browse from "./Browse";
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import MyBookmarks from "./MyBookmarks";
 import { DependencyInjectionProvider } from "./DependencyInjectionContext";
 import getApiClient from "./apiClient";
@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <DependencyInjectionProvider
         services={{ apiClient: getApiClient(session) }}
       >
@@ -53,7 +53,7 @@ function App() {
           </Routes>
         </div>
       </DependencyInjectionProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 export default App;
