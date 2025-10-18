@@ -40,10 +40,11 @@ export default function Browse({ session }) {
             if(bookmarksForThisUser.length === 0) {
               return null;
             }
+            var username = profile.username && profile.username.length > 0 ? profile.username : "anonymous user";
 
             return (
-              <div key={profile.username} style={{ marginBottom: "36px" }}>
-                <h2>{profile.username}</h2>
+              <div key={profile.id} style={{ marginBottom: "36px" }}>
+                <h2>{username}</h2>
                 <BookmarkList
                   bookmarks={bookmarksForThisUser}
                 />

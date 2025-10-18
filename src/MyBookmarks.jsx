@@ -79,8 +79,7 @@ export default function MyBookmarks() {
             padding: "12px",
           }}
         >
-          ⚠️ You need to finish your profile before your bookmarks will appear
-          on the home page. Go to <Link to="/account">My Account</Link> to
+          ⚠️ Your bookmarks will show as 'anonymous user'. To add a username, visit <Link to="/account">My Account</Link> to
           set up your profile.
         </div>
       ) : null}

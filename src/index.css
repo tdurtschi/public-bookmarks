@@ -399,7 +399,9 @@ button.primary,
 }
 
 .bookmark-description {
-  margin-top: 5px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  font-style: italic;
 }
 
 .bookmark-list li:not(:last-child) {

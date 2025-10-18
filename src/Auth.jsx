@@ -1,41 +1,13 @@
-import { useState } from 'react'
 import { supabase } from './supabaseClient'
-export default function Auth() {
-  const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState('')
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    setLoading(true)
-    const { error } = await supabase.auth.signInWithOtp({ email })
-    if (error) {
-      alert(error.error_description || error.message)
-    } else {
-      alert('Check your email for the login link!')
-    }
-    setLoading(false)
-  }
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+export default function Auth2() {
+  const isDevelopment = import.meta.env.VITE_MODE === "development";
   return (
     <div className="row flex flex-center">
       <div className="col-6 form-widget">
-        <h1 className="header">Public Bookmarks</h1>
-        <p className="description">Sign in with a magic link using your email:</p>
-        <form className="form-widget" onSubmit={handleLogin}>
-          <div>
-            <input
-              className="inputField"
-              type="email"
-              placeholder="Your email"
-              value={email}
-              required={true}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <button className={'button block'} disabled={loading}>
-              {loading ? <span>Loading</span> : <span>Send magic link</span>}
-            </button>
-          </div>
-        </form>
+        <h1 className="header">Public Bookmarks - Login{isDevelopment ? " - Local" : ""}</h1>
+        <Auth supabaseClient={supabase} providers={[]} magicLink={true} redirectTo={isDevelopment ? "localhost:5173" : null} appearance={{ theme: ThemeSupa }}  />
       </div>
     </div>
   )

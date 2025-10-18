@@ -9,6 +9,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import MyBookmarks from "./MyBookmarks";
 import { DependencyInjectionProvider } from "./DependencyInjectionContext";
 import getApiClient from "./apiClient";
+import ResetPassword from "./ResetPassword";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -40,6 +41,10 @@ function App() {
                 <Route
                   path="/account"
                   element={<Account session={session} />}
+                />
+                <Route
+                  path="/resetPassword"
+                  element={<ResetPassword session={session} />}
                 />
                 <Route path="/mybookmarks" element={<MyBookmarks />} />
                 <Route path="*" element={<Navigate to="/browse" replace />} />
