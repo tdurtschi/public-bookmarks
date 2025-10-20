@@ -22,7 +22,7 @@ export default function MyBookmarks() {
         setMyBookmarks(bookmarks);
       }
       const { data } = await apiClient.getMyProfile();
-      if (data != null) {
+      if (data != null && data.username != null) {
         setHasProfile(true);
       }
       setLoading(false);
@@ -79,41 +79,54 @@ export default function MyBookmarks() {
             padding: "12px",
           }}
         >
-          ⚠️ Your bookmarks will show as 'anonymous user'. To add a username, visit <Link to="/account">My Account</Link> to
-          set up your profile.
+          ⚠️ Your bookmarks will show as 'anonymous user'. To add a username,
+          visit <Link to="/account">My Account</Link> to set up your profile.
         </div>
       ) : null}
-      <form onSubmit={createBookmark}>
-        Add a new bookmark:
-        <input
-          type="text"
-          placeholder="Title (required)"
-          required
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="URL (required)"
-          value={newUrl}
-          required
-          onChange={(e) => setNewUrl(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Description (optional)"
-          value={newDescription}
-          onChange={(e) => setNewDescription(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Add Bookmark"}
-        </button>
-      </form>
       <BookmarkList
         bookmarks={myBookmarks}
         canDelete={true}
         onDelete={deleteBookmark}
       />
+      <div class="card">
+        <form onSubmit={createBookmark}>
+          <h2>Add a new bookmark</h2>
+          <div>
+            <label htmlFor="title">Title*</label>
+            <input
+              type="text"
+              id="title"
+              required
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="url">URL*</label>
+            <input
+              type="text"
+              id="url "
+              value={newUrl}
+              required
+              onChange={(e) => setNewUrl(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="description">Description (optional)</label>
+            <input
+              type="text"
+              id="description"
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+            />
+          </div>
+          <div style={{ marginTop: "12px" }}>
+            <button type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Add Bookmark"}
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

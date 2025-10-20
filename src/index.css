@@ -8,6 +8,7 @@ body {
   --custom-color: #222;
   --custom-color-brand: #65b662;
   --custom-color-secondary: #666;
+  --custom-color-bg-secondary: #f4f4f4;
   --custom-border: 1px solid #333;
   --custom-border-radius: 5px;
   --custom-spacing: 5px;
@@ -263,6 +264,8 @@ button.primary,
   border: var(--custom-border);
   border-radius: var(--custom-border-radius);
   padding: var(--custom-spacing);
+  background-color: var(--custom-color-bg-secondary);
+  padding: 12px 16px;
 }
 
 .avatar {
