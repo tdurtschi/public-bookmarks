@@ -5,7 +5,8 @@ export default (session) => {
     getAllBookmarks: async function () {
       const { data, error } = await supabase
         .from("bookmark")
-        .select(`id, title, url, description, tags, user_id`);
+        .select(`id, title, url, description, tags, user_id`)
+        .order("created_at", { ascending: true });
 
       if (error) {
         console.warn(error);
@@ -31,17 +32,15 @@ export default (session) => {
 
     createBookmark: async function (title, url, description, tagIds) {
       const { user } = session;
-      const { data, error } = await supabase
-        .from("bookmark")
-        .insert([
-          {
-            title: title,
-            url: url,
-            description: description,
-            tags: tagIds,
-            user_id: user.id,
-          },
-        ]);
+      const { data, error } = await supabase.from("bookmark").insert([
+        {
+          title: title,
+          url: url,
+          description: description,
+          tags: tagIds,
+          user_id: user.id,
+        },
+      ]);
       return { data, error };
     },
 
