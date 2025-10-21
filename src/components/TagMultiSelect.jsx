@@ -2,7 +2,7 @@ import CreatableSelect from 'react-select/creatable';
 import { useContext, useMemo } from "react";
 import { TagsContext } from '../TagsContext';
 
-export default function TagMultiSelect({selectedTagIds, onChange, canCreate, onCreateOption}) {
+export default function TagMultiSelect({selectedTagIds, onChange, canCreate, onCreateOption, placeholder}) {
   const {tags: allTags, loading: tagsLoading} = useContext(TagsContext);
   const options = useMemo(() => allTags.map(tag => ({ value: tag.id, label: tag.tag_name })), [allTags]);
   const selectedValues = useMemo(() => options.filter(tag => selectedTagIds?.findIndex(st => st == tag.value) > -1), [selectedTagIds, options]);
@@ -15,7 +15,7 @@ export default function TagMultiSelect({selectedTagIds, onChange, canCreate, onC
     isMulti
     options={options} 
     value={selectedValues} 
-    placeholder={tagsLoading ? "loading..." : undefined} 
+    placeholder={tagsLoading ? "loading..." : placeholder } 
     onChange={onChangeInternal} 
     onCreateOption={canCreate ? onCreateOption : undefined}/>;
 }

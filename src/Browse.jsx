@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Header from "./components/Header";
 import BookmarkList from "./components/BookmarkList";
 import { useDependencyInjection } from "./DependencyInjectionContext";
+import TagMultiSelect from "./components/TagMultiSelect";
 
 export default function Browse({ session }) {
   const [loading, setLoading] = useState(true);
   const [profiles, setProfiles] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
+  const [filteredTagIds, setFilteredTagIds] = useState([]);
+
+  const displayBookmarks = useMemo(() => bookmarks.filter(b => isSubset(b.tags, filteredTagIds)), [bookmarks, filteredTagIds]);
+
   const { apiClient } = useDependencyInjection();
 
   useEffect(() => {
@@ -35,8 +40,11 @@ export default function Browse({ session }) {
         "Loading ..."
       ) : (
         <>
+          <div>
+            <TagMultiSelect canCreate={false} onChange={setFilteredTagIds} selectedTagIds={filteredTagIds} placeholder={"Filter bookmarks by tags..."} />
+          </div>
           {profiles.map((profile) => {
-            var bookmarksForThisUser = bookmarks.filter((b) => b.user_id === profile.id)
+            var bookmarksForThisUser = displayBookmarks.filter((b) => b.user_id === profile.id)
             if(bookmarksForThisUser.length === 0) {
               return null;
             }
@@ -56,4 +64,13 @@ export default function Browse({ session }) {
       )}
     </>
   );
+}
+
+function isSubset(b, a) {
+  for (let i = 0; i < a.length; i++) {
+    if (!(b.findIndex(b => b == a[i]) > -1)) {
+      return false;
+    }
+  }
+  return true;
 }
