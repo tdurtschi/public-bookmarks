@@ -10,6 +10,7 @@ import MyBookmarks from "./MyBookmarks";
 import { DependencyInjectionProvider } from "./DependencyInjectionContext";
 import getApiClient from "./apiClient";
 import ResetPassword from "./ResetPassword";
+import { TagsContext, TagsContextProvider } from "./TagsContext";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -27,31 +28,36 @@ function App() {
       <DependencyInjectionProvider
         services={{ apiClient: getApiClient(session) }}
       >
-        <div className="container" style={{ padding: "50px 0 100px 0" }}>
-          <Routes>
-            <Route path="/about" element={<About />} />
-            {!session ? (
-              <>
-                <Route path="/login" element={<Auth />} />
-                <Route path="*" element={<Browse session={session} />} />
-              </>
-            ) : (
-              <>
-                <Route path="/browse" element={<Browse session={session} />} />
-                <Route
-                  path="/account"
-                  element={<Account session={session} />}
-                />
-                <Route
-                  path="/resetPassword"
-                  element={<ResetPassword session={session} />}
-                />
-                <Route path="/mybookmarks" element={<MyBookmarks />} />
-                <Route path="*" element={<Navigate to="/browse" replace />} />
-              </>
-            )}
-          </Routes>
-        </div>
+        <TagsContextProvider>
+          <div className="container" style={{ padding: "50px 0 100px 0" }}>
+            <Routes>
+              <Route path="/about" element={<About />} />
+              {!session ? (
+                <>
+                  <Route path="/login" element={<Auth />} />
+                  <Route path="*" element={<Browse session={session} />} />
+                </>
+              ) : (
+                <>
+                  <Route
+                    path="/browse"
+                    element={<Browse session={session} />}
+                  />
+                  <Route
+                    path="/account"
+                    element={<Account session={session} />}
+                  />
+                  <Route
+                    path="/resetPassword"
+                    element={<ResetPassword session={session} />}
+                  />
+                  <Route path="/mybookmarks" element={<MyBookmarks />} />
+                  <Route path="*" element={<Navigate to="/browse" replace />} />
+                </>
+              )}
+            </Routes>
+          </div>
+        </TagsContextProvider>
       </DependencyInjectionProvider>
     </BrowserRouter>
   );

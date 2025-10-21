@@ -6,13 +6,11 @@ import { Link } from "react-router-dom";
 import AddBookmarkForm from "./components/AddBookmarkForm";
 
 export default function MyBookmarks() {
-  var [myBookmarks, setMyBookmarks] = useState([]);
-  const [newTitle, setNewTitle] = useState("");
-  const [newUrl, setNewUrl] = useState("");
-  const [newDescription, setNewDescription] = useState("");
+  const [myBookmarks, setMyBookmarks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { apiClient } = useDependencyInjection();
   const [hasProfile, setHasProfile] = useState(false);
+  
+  const { apiClient } = useDependencyInjection();
 
   useEffect(() => {
     let ignore = false;
@@ -34,42 +32,17 @@ export default function MyBookmarks() {
     };
   }, []);
 
-  const onBookmarkCreated = async () => {
+  const onBookmarksModified = async () => {
       const data = await apiClient.getMyBookmarks();
       setMyBookmarks(data);
   }
-
-  const createBookmark = async (event) => {
-    console.log("Creating bookmark");
-    event.preventDefault();
-    setLoading(true);
-    const { error } = await apiClient.createBookmark(
-      newTitle,
-      newUrl,
-      newDescription
-    );
-
-    if (error) {
-      alert(error.message);
-    } else {
-      setNewTitle("");
-      setNewDescription("");
-      setNewUrl("");
-
-      const data = await apiClient.getMyBookmarks();
-      setMyBookmarks(data);
-    }
-    window.location.reload();
-    setLoading(false);
-  };
 
   const deleteBookmark = async (id) => {
     const { error } = await apiClient.deleteBookmark(id);
     if (error) {
       alert(error.message);
     } else {
-      const data = await apiClient.getMyBookmarks();
-      setMyBookmarks(data);
+      await onBookmarksModified();
     }
   };
 
@@ -91,10 +64,11 @@ export default function MyBookmarks() {
       ) : null}
       <BookmarkList
         bookmarks={myBookmarks}
-        canDelete={true}
+        canEdit={true}
         onDelete={deleteBookmark}
+        onUpdate={onBookmarksModified}
       />
-      <AddBookmarkForm onBookmarkCreated={onBookmarkCreated} />
+      <AddBookmarkForm onBookmarkCreated={onBookmarksModified} />
     </>
   );
 }

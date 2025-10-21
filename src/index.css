@@ -417,3 +417,26 @@ button.primary,
 .bookmark-list a:hover {
   text-decoration: underline;
 }
+
+.bookmark-tag {
+  display: inline-block;
+  background-color: var(--custom-color-brand);
+  color: white;
+  border: var(--custom-border);
+  border-radius: var(--custom-border-radius);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  cursor: default;
+}
+
+.bookmark-tag.bookmark-tag-add {
+  background-color: var(--custom-bg-color-secondary);
+  color: var(--custom-color);
+  cursor: pointer;
+}
+
+.tag-container{
+  margin: 8px 0px;
+  display: flex;
+  gap: 6px; 
+}

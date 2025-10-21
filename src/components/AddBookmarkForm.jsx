@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useDependencyInjection } from "../DependencyInjectionContext";
+import TagMultiSelect from "./TagMultiSelect";
+import { TagsContext } from "../TagsContext";
 
 export default function AddBookmarkForm({ onBookmarkCreated }) {
   const [newTitle, setNewTitle] = useState("");
@@ -7,7 +9,21 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
   const [newDescription, setNewDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const { apiClient } = useDependencyInjection();
+  const { onCreateTag } = useContext(TagsContext);
+  const [selectedTagIds, setSelectedTagIds] = useState([]);
+  const onSelectedTagsChanged = (newSelectedTagIds) => {
+    setSelectedTagIds(newSelectedTagIds);
+  }
 
+  const createTag = async (inputValue) => {
+    const {data, error} = await onCreateTag(inputValue);
+
+    if(!error) {
+      onSelectedTagsChanged([...selectedTagIds, data.id]);
+    } else {
+      console.error("Error creating tag:", error);
+    }
+  }
   const createBookmark = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -15,7 +31,8 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
     const { error } = await apiClient.createBookmark(
       newTitle,
       newUrl,
-      newDescription
+      newDescription,
+      selectedTagIds
     );
 
     if (error) {
@@ -62,6 +79,10 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
           />
+        </div>
+        <div>
+          <label htmlFor="tags">Tags (optional)</label>
+          <TagMultiSelect selectedTagIds={selectedTagIds} onChange={onSelectedTagsChanged} onCreateOption={createTag}/>
         </div>
         <div style={{ marginTop: "12px" }}>
           <button type="submit" disabled={loading}>

@@ -1,0 +1,1 @@
+CREATE INDEX tag_array ON bookmark USING GIN (tags);

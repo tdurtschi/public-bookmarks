@@ -5,7 +5,7 @@ export default (session) => {
     getAllBookmarks: async function () {
       const { data, error } = await supabase
         .from("bookmark")
-        .select(`id, title, url, description, user_id`);
+        .select(`id, title, url, description, tags, user_id`);
 
       if (error) {
         console.warn(error);
@@ -18,7 +18,8 @@ export default (session) => {
         const { user } = session;
         const { data, error } = await supabase
                 .from('bookmark')
-                .select(`id, url, title, description`)
+                .select(`id, url, title, description, tags`)
+                .order('created_at', { ascending: true })
                 .eq('user_id', user.id);
         
         if (error) {       
@@ -28,14 +29,44 @@ export default (session) => {
         return data;
     },
 
-    createBookmark: async function (title, url, description) {
+    createBookmark: async function (title, url, description, tagIds) {
         const { user } = session;
         const { data, error } = await supabase
             .from('bookmark')
             .insert([
-                { title: title, url: url, description: description, user_id: user.id },
+                { title: title, url: url, description: description, tags: tagIds, user_id: user.id },
             ]);
         return { data, error }
+    },
+
+    updateBookmarkTags: async function (bookmarkId, tagIds) {
+        const { error } = await supabase
+            .from('bookmark')
+            .update({ tags: tagIds })
+            .eq('id', bookmarkId);
+        return { error }
+    },
+
+    getAllTags: async function() {
+        const { data, error } = await supabase
+            .from('tag')
+            .select(`id, tag_name`)
+            .order('tag_name', { ascending: true });
+        
+        if (error) {       
+            console.warn(error);   
+        }
+        return data
+    },
+
+    createTag: async function (name) {
+        const { data, error } = await supabase
+            .from('tag')
+            .insert([
+                { tag_name: name },
+            ]);
+            
+        return { data, error };
     },
 
     deleteBookmark: async function (id) {
