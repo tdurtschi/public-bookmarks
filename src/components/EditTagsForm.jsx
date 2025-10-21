@@ -8,7 +8,7 @@ export default function EditTagsForm({ bookmarkId, onClose, selectedTagIds }) {
   const { onCreateTag } = useContext(TagsContext);
   const [loading, setLoading] = useState(false);
   const [newSelectedTagIds, setNewSelectedTagIds] = useState(
-    selectedTagIds || [],
+    selectedTagIds || []
   );
   const onSelectedTagsChanged = (newSelectedTagIds) => {
     setNewSelectedTagIds(newSelectedTagIds);
@@ -40,6 +40,7 @@ export default function EditTagsForm({ bookmarkId, onClose, selectedTagIds }) {
           <label htmlFor="tag">Add/Edit Tags*</label>
           <TagMultiSelect
             selectedTagIds={newSelectedTagIds}
+            canCreate={true}
             onChange={onSelectedTagsChanged}
             onCreateOption={createTag}
           />

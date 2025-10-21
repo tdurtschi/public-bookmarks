@@ -1,6 +1,7 @@
 html,
 body {
-  --custom-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+  --custom-font-family:
+    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --custom-bg-color: #fff;
   --custom-panel-color: #222;
@@ -44,7 +45,7 @@ body,
   position: relative;
   width: 100%;
 }
-.row [class^='col'] {
+.row [class^="col"] {
   float: left;
   margin: 0.5rem 2%;
   min-height: 0.125rem;
@@ -100,7 +101,7 @@ body,
   width: 96%;
 }
 .row::after {
-  content: '';
+  content: "";
   display: table;
   clear: both;
 }
@@ -357,7 +358,7 @@ button.primary,
 }
 
 .form-widget .button:hover {
-  outline: 1px solid var(--custom-color-secondary)
+  outline: 1px solid var(--custom-color-secondary);
 }
 
 .form-widget .button > .loader {
@@ -384,10 +385,10 @@ button.primary,
   margin-bottom: 16px;
 }
 
-.header h1 a{
+.header h1 a {
   text-decoration: none;
 }
-.header h1 a:hover{
+.header h1 a:hover {
   text-decoration: underline;
 }
 
@@ -398,7 +399,6 @@ button.primary,
 
 .bookmark-description {
   margin-top: 4px;
-  margin-bottom: 16px;
   font-style: italic;
 }
 
@@ -434,8 +434,8 @@ button.primary,
   cursor: pointer;
 }
 
-.tag-container{
-  margin: 8px 0px;
+.tag-container {
+  margin: 4px 0 8px 0;
   display: flex;
-  gap: 6px; 
+  gap: 6px;
 }

@@ -12,7 +12,7 @@ export default function Browse({ session }) {
 
   const displayBookmarks = useMemo(
     () => bookmarks.filter((b) => isSubset(b.tags, filteredTagIds)),
-    [bookmarks, filteredTagIds],
+    [bookmarks, filteredTagIds]
   );
 
   const { apiClient } = useDependencyInjection();
@@ -53,7 +53,7 @@ export default function Browse({ session }) {
           </div>
           {profiles.map((profile) => {
             var bookmarksForThisUser = displayBookmarks.filter(
-              (b) => b.user_id === profile.id,
+              (b) => b.user_id === profile.id
             );
             if (bookmarksForThisUser.length === 0) {
               return null;
@@ -78,7 +78,7 @@ export default function Browse({ session }) {
 
 function isSubset(b, a) {
   for (let i = 0; i < a.length; i++) {
-    if (!(b.findIndex((b) => b == a[i]) > -1)) {
+    if (!(b?.findIndex((b) => b == a[i]) > -1)) {
       return false;
     }
   }

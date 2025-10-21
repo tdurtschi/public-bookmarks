@@ -7,14 +7,15 @@ Share great content with other users. Unlike feed-based social media, here you c
 ## Backlog
 
 - Tag
-    - case insensitive
-    - unique constraint on table
-    - deduplicate code
+  - case insensitive
+  - unique constraint on table
+  - deduplicate code
 - Confirm delete
 - Tech debt
-    - load tags in context?
-    - linter
-    - console logs & alerts -> messages
+  - local & prod `.env` files
+  - load tags in context?
+  - linter
+  - console logs & alerts -> messages
 
 ## Architecture
 
