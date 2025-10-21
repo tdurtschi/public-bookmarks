@@ -41,7 +41,7 @@ export default function Browse({ session }) {
       ) : (
         <>
           <div>
-            <TagMultiSelect canCreate={false} onChange={setFilteredTagIds} selectedTagIds={filteredTagIds} placeholder={"Filter bookmarks by tags..."} />
+            <TagMultiSelect canCreate={false} onChange={setFilteredTagIds} selectedTagIds={filteredTagIds} placeholder={"Filter by tags..."} />
           </div>
           {profiles.map((profile) => {
             var bookmarksForThisUser = displayBookmarks.filter((b) => b.user_id === profile.id)

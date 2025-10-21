@@ -10,7 +10,7 @@ import MyBookmarks from "./MyBookmarks";
 import { DependencyInjectionProvider } from "./DependencyInjectionContext";
 import getApiClient from "./apiClient";
 import ResetPassword from "./ResetPassword";
-import { TagsContext, TagsContextProvider } from "./TagsContext";
+import { TagsContextProvider } from "./TagsContext";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -29,7 +29,7 @@ function App() {
         services={{ apiClient: getApiClient(session) }}
       >
         <TagsContextProvider>
-          <div className="container" style={{ padding: "50px 0 100px 0" }}>
+          <div className="container" style={{ padding: "0 0 100px 0" }}>
             <Routes>
               <Route path="/about" element={<About />} />
               {!session ? (

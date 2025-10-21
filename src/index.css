@@ -244,7 +244,7 @@ button,
   display: inline-block;
   text-align: center;
   border-radius: var(--custom-border-radius);
-  padding: 0.5rem 1rem;
+  padding: 2px 8px;
   cursor: pointer;
   text-align: center;
   font-size: 0.9rem;
@@ -329,12 +329,6 @@ button.primary,
   }
 }
 
-.mainHeader {
-  width: 100%;
-  font-size: 1.3rem;
-  margin-bottom: 20px;
-}
-
 .avatarPlaceholder {
   border: var(--custom-border);
   border-radius: var(--custom-border-radius);
@@ -387,6 +381,7 @@ button.primary,
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .header h1 a{
@@ -411,8 +406,12 @@ button.primary,
   margin-bottom: 12px;
 }
 
-.bookmark-list a {
+.bookmark-list a.truncate {
   text-decoration: none;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .bookmark-list a:hover {
   text-decoration: underline;

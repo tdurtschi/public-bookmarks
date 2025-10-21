@@ -128,7 +128,7 @@ export default function BookmarkListItem({
         </a>
       </strong>
       <div>
-        <a href={bookmark.url} target="_blank" rel="noopener noreferrer">
+        <a href={bookmark.url} className="truncate" target="_blank" rel="noopener noreferrer">
           {bookmark.url}
         </a>
       </div>
@@ -144,8 +144,8 @@ export default function BookmarkListItem({
         selectedTagIds={bookmark.tags || []}
       />
       {canEdit ? (
-        <button className="pill" onClick={() => onDelete(bookmark.id)}>
-          Delete
+        <button onClick={() => onDelete(bookmark.id)}>
+          Delete Bookmark
         </button>
       ) : (
         <></>
