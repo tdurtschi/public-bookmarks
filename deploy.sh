@@ -1,0 +1,1 @@
+az storage blob upload-batch --account-name $AZ_STORAGE_ACCT_NAME --auth-mode key -d '$web' -s dist/ --overwrite
