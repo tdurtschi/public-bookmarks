@@ -4,7 +4,12 @@ import BookmarkTag from "./BookmarkTag";
 import AddTagButton from "./AddTagButton";
 import EditTagsForm from "./EditTagsForm";
 
-export default function TagContainer({ bookmarkId, selectedTagIds, canEdit, onUpdate }) {
+export default function TagContainer({
+  bookmarkId,
+  selectedTagIds,
+  canEdit,
+  onUpdate,
+}) {
   const { tags: allTags, loading: tagsLoading } = useContext(TagsContext);
   const [showTagForm, setShowTagForm] = useState(false);
 

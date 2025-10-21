@@ -13,26 +13,26 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
   const [selectedTagIds, setSelectedTagIds] = useState([]);
   const onSelectedTagsChanged = (newSelectedTagIds) => {
     setSelectedTagIds(newSelectedTagIds);
-  }
+  };
 
   const createTag = async (inputValue) => {
-    const {data, error} = await onCreateTag(inputValue);
+    const { data, error } = await onCreateTag(inputValue);
 
-    if(!error) {
+    if (!error) {
       onSelectedTagsChanged([...selectedTagIds, data.id]);
     } else {
       console.error("Error creating tag:", error);
     }
-  }
+  };
   const createBookmark = async (event) => {
     event.preventDefault();
     setLoading(true);
-    
+
     const { error } = await apiClient.createBookmark(
       newTitle,
       newUrl,
       newDescription,
-      selectedTagIds
+      selectedTagIds,
     );
 
     if (error) {
@@ -82,7 +82,11 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
         </div>
         <div>
           <label htmlFor="tags">Tags (optional)</label>
-          <TagMultiSelect selectedTagIds={selectedTagIds} onChange={onSelectedTagsChanged} onCreateOption={createTag}/>
+          <TagMultiSelect
+            selectedTagIds={selectedTagIds}
+            onChange={onSelectedTagsChanged}
+            onCreateOption={createTag}
+          />
         </div>
         <div style={{ marginTop: "12px" }}>
           <button type="submit" disabled={loading}>

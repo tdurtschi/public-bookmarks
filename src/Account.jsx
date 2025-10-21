@@ -1,52 +1,53 @@
-import { useState, useEffect } from 'react'
-import Avatar from './Avatar'
-import Header from './components/Header'
-import { useDependencyInjection } from './DependencyInjectionContext';
+import { useState, useEffect } from "react";
+import Avatar from "./Avatar";
+import Header from "./components/Header";
+import { useDependencyInjection } from "./DependencyInjectionContext";
+
 export default function Account({ session }) {
-  const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState(null);
+  const [avatar_url, setAvatarUrl] = useState(null);
   const { apiClient } = useDependencyInjection();
 
   useEffect(() => {
-    let ignore = false
+    let ignore = false;
     async function getProfile() {
-      setLoading(true)
+      setLoading(true);
       const { data, error } = await apiClient.getMyProfile();
       if (!ignore) {
         if (error) {
-          console.warn(error)
+          console.warn(error);
         } else if (data) {
-          setUsername(data.username)
-          setAvatarUrl(data.avatar_url)
+          setUsername(data.username);
+          setAvatarUrl(data.avatar_url);
         }
       }
-      setLoading(false)
+      setLoading(false);
     }
-    getProfile()
+    getProfile();
     return () => {
-      ignore = true
-    }
-  }, [])
+      ignore = true;
+    };
+  }, []);
   async function updateProfile(event, avatarUrl) {
-    event.preventDefault()
-    setLoading(true)
+    event.preventDefault();
+    setLoading(true);
     const updates = {
       username,
       avatar_url: avatarUrl,
       updated_at: new Date(),
-    }
+    };
     const { error } = await apiClient.updateMyProfile(updates);
     if (error) {
-      alert(error.message)
+      alert(error.message);
     } else {
-      setAvatarUrl(avatarUrl)
+      setAvatarUrl(avatarUrl);
     }
-    setLoading(false)
+    setLoading(false);
   }
   return (
     <>
-      <Header/>  
+      <Header />
       <h1>My Account</h1>
       <form onSubmit={updateProfile} className="form-widget">
         <div>
@@ -59,7 +60,7 @@ export default function Account({ session }) {
             id="username"
             type="text"
             required
-            value={username || ''}
+            value={username || ""}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -67,15 +68,19 @@ export default function Account({ session }) {
           url={avatar_url}
           size={150}
           onUpload={(event, url) => {
-              updateProfile(event, url)
+            updateProfile(event, url);
           }}
         />
         <div>
-          <button className="button block primary" type="submit" disabled={loading}>
-            {loading ? 'Loading ...' : 'Update'}
+          <button
+            className="button block primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Loading ..." : "Update"}
           </button>
         </div>
       </form>
     </>
-  )
+  );
 }

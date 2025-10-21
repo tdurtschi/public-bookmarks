@@ -1,45 +1,48 @@
-import { useEffect, useState } from 'react'
-import { useDependencyInjection } from './DependencyInjectionContext';
+import { useEffect, useState } from "react";
+import { useDependencyInjection } from "./DependencyInjectionContext";
 export default function Avatar({ url, size, onUpload }) {
-  const [avatarUrl, setAvatarUrl] = useState(null)
-  const [uploading, setUploading] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const { apiClient } = useDependencyInjection();
   useEffect(() => {
-    if (url) downloadImage(url)
-  }, [url])
+    if (url) downloadImage(url);
+  }, [url]);
 
   async function downloadImage(path) {
     try {
       const { data, error } = await apiClient.downloadAvatar(path);
       if (error) {
-        throw error
+        throw error;
       }
-      const url = URL.createObjectURL(data)
-      setAvatarUrl(url)
+      const url = URL.createObjectURL(data);
+      setAvatarUrl(url);
     } catch (error) {
-      console.log('Error downloading image: ', error.message)
+      console.log("Error downloading image: ", error.message);
     }
   }
 
   async function uploadAvatar(event) {
     try {
-      setUploading(true)
+      setUploading(true);
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
+        throw new Error("You must select an image to upload.");
       }
-      const file = event.target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
-      const filePath = `${fileName}`
-      const { error: uploadError } = await apiClient.uploadNewAvatar(filePath, file);
+      const file = event.target.files[0];
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+      const { error: uploadError } = await apiClient.uploadNewAvatar(
+        filePath,
+        file,
+      );
       if (uploadError) {
-        throw uploadError
+        throw uploadError;
       }
-      onUpload(event, filePath)
+      onUpload(event, filePath);
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
   }
 
@@ -54,16 +57,19 @@ export default function Avatar({ url, size, onUpload }) {
           style={{ height: size, width: size }}
         />
       ) : (
-        <div className="avatar no-image" style={{ height: size, width: size }} />
+        <div
+          className="avatar no-image"
+          style={{ height: size, width: size }}
+        />
       )}
       <div style={{ width: size }}>
         <label className="button primary block" htmlFor="single">
-          {uploading ? 'Uploading ...' : 'Upload'}
+          {uploading ? "Uploading ..." : "Upload"}
         </label>
         <input
           style={{
-            visibility: 'hidden',
-            position: 'absolute',
+            visibility: "hidden",
+            position: "absolute",
           }}
           type="file"
           id="single"
@@ -73,5 +79,5 @@ export default function Avatar({ url, size, onUpload }) {
         />
       </div>
     </div>
-  )
+  );
 }

@@ -5,7 +5,7 @@ import { useDependencyInjection } from "./DependencyInjectionContext";
 const defaultTagsContext = {
   tags: [],
   loading: false,
-  onCreateTag: async () => { },
+  onCreateTag: async () => {},
 };
 
 export const TagsContext = createContext(defaultTagsContext);
@@ -33,9 +33,9 @@ export function TagsContextProvider({ children }) {
 
   const onCreateTag = async (inputValue) => {
     setLoading(true);
-    const {error} = await apiClient.createTag(inputValue);
+    const { error } = await apiClient.createTag(inputValue);
     if (error) {
-      return {error}
+      return { error };
     }
 
     const allTags = await apiClient.getAllTags();
@@ -43,11 +43,13 @@ export function TagsContextProvider({ children }) {
 
     setLoading(false);
 
-    return {data: allTags.find(tag => tag.tag_name === inputValue)};
-  }
+    return { data: allTags.find((tag) => tag.tag_name === inputValue) };
+  };
 
   return (
-    <TagsContext.Provider value={{ tags: allTags, loading: loading, onCreateTag }}>
+    <TagsContext.Provider
+      value={{ tags: allTags, loading: loading, onCreateTag }}
+    >
       {children}
     </TagsContext.Provider>
   );

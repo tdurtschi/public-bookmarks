@@ -10,7 +10,10 @@ export default function Browse({ session }) {
   const [bookmarks, setBookmarks] = useState([]);
   const [filteredTagIds, setFilteredTagIds] = useState([]);
 
-  const displayBookmarks = useMemo(() => bookmarks.filter(b => isSubset(b.tags, filteredTagIds)), [bookmarks, filteredTagIds]);
+  const displayBookmarks = useMemo(
+    () => bookmarks.filter((b) => isSubset(b.tags, filteredTagIds)),
+    [bookmarks, filteredTagIds],
+  );
 
   const { apiClient } = useDependencyInjection();
 
@@ -35,31 +38,38 @@ export default function Browse({ session }) {
 
   return (
     <>
-      <Header isAnonymous={session == null}/>
+      <Header isAnonymous={session == null} />
       {loading ? (
         "Loading ..."
       ) : (
         <>
           <div>
-            <TagMultiSelect canCreate={false} onChange={setFilteredTagIds} selectedTagIds={filteredTagIds} placeholder={"Filter by tags..."} />
+            <TagMultiSelect
+              canCreate={false}
+              onChange={setFilteredTagIds}
+              selectedTagIds={filteredTagIds}
+              placeholder={"Filter by tags..."}
+            />
           </div>
           {profiles.map((profile) => {
-            var bookmarksForThisUser = displayBookmarks.filter((b) => b.user_id === profile.id)
-            if(bookmarksForThisUser.length === 0) {
+            var bookmarksForThisUser = displayBookmarks.filter(
+              (b) => b.user_id === profile.id,
+            );
+            if (bookmarksForThisUser.length === 0) {
               return null;
             }
-            var username = profile.username && profile.username.length > 0 ? profile.username : "anonymous user";
+            var username =
+              profile.username && profile.username.length > 0
+                ? profile.username
+                : "anonymous user";
 
             return (
               <div key={profile.id} style={{ marginBottom: "36px" }}>
                 <h2>{username}</h2>
-                <BookmarkList
-                  bookmarks={bookmarksForThisUser}
-                />
+                <BookmarkList bookmarks={bookmarksForThisUser} />
               </div>
-              )
-            }
-          )}
+            );
+          })}
         </>
       )}
     </>
@@ -68,7 +78,7 @@ export default function Browse({ session }) {
 
 function isSubset(b, a) {
   for (let i = 0; i < a.length; i++) {
-    if (!(b.findIndex(b => b == a[i]) > -1)) {
+    if (!(b.findIndex((b) => b == a[i]) > -1)) {
       return false;
     }
   }

@@ -8,7 +8,7 @@ export default function EditTagsForm({ bookmarkId, onClose, selectedTagIds }) {
   const { onCreateTag } = useContext(TagsContext);
   const [loading, setLoading] = useState(false);
   const [newSelectedTagIds, setNewSelectedTagIds] = useState(
-    selectedTagIds || []
+    selectedTagIds || [],
   );
   const onSelectedTagsChanged = (newSelectedTagIds) => {
     setNewSelectedTagIds(newSelectedTagIds);
@@ -34,7 +34,7 @@ export default function EditTagsForm({ bookmarkId, onClose, selectedTagIds }) {
   };
 
   return (
-    <div className="card" style={{margin: "12px 0px"}}>
+    <div className="card" style={{ margin: "12px 0px" }}>
       <form onSubmit={onSubmit} className="new-tag-form">
         <div>
           <label htmlFor="tag">Add/Edit Tags*</label>

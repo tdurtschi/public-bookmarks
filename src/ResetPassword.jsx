@@ -1,27 +1,27 @@
-import { useState } from 'react'
-import Header from './components/Header'
-import { supabase } from './supabaseClient'
+import { useState } from "react";
+import Header from "./components/Header";
+import { supabase } from "./supabaseClient";
 
 export default function ResetPassword({ session }) {
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState(null)
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
 
-  const email = session?.user?.email || ''
+  const email = session?.user?.email || "";
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setLoading(true)
-    setMessage(null)
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
     // update the logged-in user's password
-    const { data, error } = await supabase.auth.updateUser({ password })
+    const { data, error } = await supabase.auth.updateUser({ password });
     if (error) {
-      setMessage({ type: 'error', text: error.message })
+      setMessage({ type: "error", text: error.message });
     } else {
-      setMessage({ type: 'success', text: 'Password updated.' })
-      setPassword('')
+      setMessage({ type: "success", text: "Password updated." });
+      setPassword("");
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
@@ -44,16 +44,25 @@ export default function ResetPassword({ session }) {
           />
         </div>
         <div>
-          <button className="button block primary" type="submit" disabled={loading}>
-            {loading ? 'Updating...' : 'Update Password'}
+          <button
+            className="button block primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Updating..." : "Update Password"}
           </button>
         </div>
         {message && (
-          <div style={{ marginTop: '10px', color: message.type === 'error' ? 'red' : 'green' }}>
+          <div
+            style={{
+              marginTop: "10px",
+              color: message.type === "error" ? "red" : "green",
+            }}
+          >
             {message.text}
           </div>
         )}
       </form>
     </>
-  )
+  );
 }

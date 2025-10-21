@@ -9,7 +9,7 @@ export default function MyBookmarks() {
   const [myBookmarks, setMyBookmarks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasProfile, setHasProfile] = useState(false);
-  
+
   const { apiClient } = useDependencyInjection();
 
   useEffect(() => {
@@ -33,9 +33,9 @@ export default function MyBookmarks() {
   }, []);
 
   const onBookmarksModified = async () => {
-      const data = await apiClient.getMyBookmarks();
-      setMyBookmarks(data);
-  }
+    const data = await apiClient.getMyBookmarks();
+    setMyBookmarks(data);
+  };
 
   const deleteBookmark = async (id) => {
     const { error } = await apiClient.deleteBookmark(id);
