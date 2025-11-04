@@ -32,7 +32,7 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
       newTitle,
       newUrl,
       newDescription,
-      selectedTagIds,
+      selectedTagIds
     );
 
     if (error) {
@@ -86,6 +86,7 @@ export default function AddBookmarkForm({ onBookmarkCreated }) {
             selectedTagIds={selectedTagIds}
             onChange={onSelectedTagsChanged}
             onCreateOption={createTag}
+            canCreate={true}
           />
         </div>
         <div style={{ marginTop: "12px" }}>

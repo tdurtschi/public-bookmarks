@@ -14,7 +14,6 @@ Share great content with other users. Unlike feed-based social media, here you c
 - Tech debt
   - local & prod `.env` files
   - load tags in context?
-  - linter
   - console logs & alerts -> messages
 
 ## Architecture
