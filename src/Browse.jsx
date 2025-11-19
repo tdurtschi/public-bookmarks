@@ -21,8 +21,10 @@ export default function Browse({ session }) {
     let ignore = false;
     async function getAllData() {
       setLoading(true);
-      const profiles = await apiClient.getAllProfiles();
-      const bookmarks = await apiClient.getAllBookmarks();
+      const [profiles, bookmarks] = await Promise.all([
+        apiClient.getAllProfiles(),
+        apiClient.getAllBookmarks(),
+      ]);
       if (!ignore) {
         setProfiles(profiles);
         setBookmarks(bookmarks);
