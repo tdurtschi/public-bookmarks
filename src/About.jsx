@@ -6,20 +6,12 @@ export default function Account() {
       <Header isAnonymous={true} />
       <h1>About</h1>
       <p>
-        Public Bookmarks is a repository for the best content on the internet
-        inspired by the{" "}
-        <a href="https://thehistoryoftheweb.com/postscript/the-history-of-the-webs-monthly-blogroll-august-2018/">
-          blog rolls
-        </a>{" "}
-        of days past. Here you will find no infinite scroll, no ads, and
-        (hopefully) no AI slop. Instead, you'll find curated links to
-        high-quality content from real people.
+        Public Bookmarks is an open repository for the best content on the internet. Here you will find curated links to high-quality web content.
       </p>
       <p>
-        I invite you to add links to whatever type of high-quality web content
-        interests you. Odds are, if you find it valuable, someone else will too.
+        A free user account is required to add bookmarks. Please be mindful of the fact all users may view your bookmarks.
       </p>
-      <h2>More about the app</h2>
+      <h2>About the app</h2>
       <p>
         Public Bookmarks is an{" "}
         <a href="https://github.com/tdurtschi/public-bookmarks">open source</a>{" "}
